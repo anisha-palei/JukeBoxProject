@@ -4,7 +4,7 @@
  * Created with : IntelliJ IDEA Community Edition
  */
 
-package com.niit.jdp.repositories;
+package com.niit.jdp.repository;
 
 public class PlaylistRepository {
 
