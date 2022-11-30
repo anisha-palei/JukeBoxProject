@@ -12,5 +12,24 @@ import java.util.List;
 
 public class SongRepository {
 
+    public List<Song> displaySongList()
+    {
+        return null;
+    }
+    public void searchSongBySongName()
+    {
 
+    }
+    public void  searchSongByArtist()
+    {
+
+    }
+    public void searchSongByGenre()
+    {
+
+    }
+    public void searchSongByAlbum()
+    {
+
+    }
 }
