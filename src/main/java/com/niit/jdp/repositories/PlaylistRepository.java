@@ -7,4 +7,17 @@
 package com.niit.jdp.repositories;
 
 public class PlaylistRepository {
+
+    public void createPlaylist()
+    {
+
+    }
+    public void playPlaylist()
+    {}
+    public void addSongToPlayList()
+    {}
+    public void displayContentPlayList()
+    {}
+    public void displayAllSongs()
+    {}
 }
