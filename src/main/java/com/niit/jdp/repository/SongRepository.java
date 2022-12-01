@@ -74,7 +74,7 @@ public class SongRepository {
     }
     public List<Song> searchByAlbumName(String albumName)
     {
-        String query= " select * from juke.song where albumName = ? ";
+        String query= " select * from juke.song where album_name = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,albumName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -97,7 +97,7 @@ public class SongRepository {
     }
     public List<Song> searchByArtistName(String artistName)
     {
-        String query= " select * from sales.song where artistName = ? ";
+        String query= " select * from jukebox.song where artist_name = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,artistName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -105,7 +105,7 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                String songDuration = resultSet.getString("songDuration");
+                String songDuration = resultSet.getString("duration");
                 String genreType = resultSet.getString("genre_type");
                 String albumName = resultSet.getString("album_name");
                 String name = resultSet.getString("artist_name");
@@ -118,8 +118,27 @@ public class SongRepository {
         }
         return  finalSongList;
     }
-    public void searchSongByAlbum()
+    public List<Song> searchByGenre(String genreType)
     {
+        String query= " select * from jukebox.song where genre_type = ? ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1,genreType);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                int songId = resultSet.getInt("song_id");
+                String songName = resultSet.getString("song_name");
+                String songDuration = resultSet.getString("duration");
+                String type = resultSet.getString("genre_type");
+                String albumName = resultSet.getString("album_name");
+                String artistName = resultSet.getString("artist_name");
+                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                finalSongList.add(song);
 
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  finalSongList;
     }
 }
