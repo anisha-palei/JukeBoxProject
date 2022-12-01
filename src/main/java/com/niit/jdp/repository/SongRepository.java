@@ -95,9 +95,28 @@ public class SongRepository {
         }
         return  finalSongList;
     }
-    public void searchSongByGenre()
+    public List<Song> searchByArtistName(String artistName)
     {
+        String query= " select * from sales.song where artistName = ? ";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1,artistName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next())
+            {
+                int songId = resultSet.getInt("song_id");
+                String songName = resultSet.getString("song_name");
+                String songDuration = resultSet.getString("songDuration");
+                String genreType = resultSet.getString("genre_type");
+                String albumName = resultSet.getString("album_name");
+                String name = resultSet.getString("artist_name");
+                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                finalSongList.add(song);
 
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return  finalSongList;
     }
     public void searchSongByAlbum()
     {
