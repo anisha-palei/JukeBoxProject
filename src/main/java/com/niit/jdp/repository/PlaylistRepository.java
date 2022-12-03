@@ -11,10 +11,7 @@ import com.niit.jdp.model.Song;
 import com.niit.jdp.service.DatabaseConnectionService;
 import com.niit.jdp.service.MusicPlayerService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +63,7 @@ public class PlaylistRepository {
     }
     public List<Song> getSonglistFromPlaylist(int playlistId)  {
         List<Song> songs = new ArrayList<>();
-        String query = "select * from sales.playlist where playlist_id = ?;";
+        String query = "select * from jukebox.playlist where playlist_id = ?;";
         ResultSet resultSet;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, playlistId);
@@ -84,5 +81,25 @@ public class PlaylistRepository {
         }
 
         return songs;
+    }
+    public List<Playlist> displayAllPlaylist() {
+        List<Playlist> listOfPlaylist=new ArrayList<>();
+        String query="Select * from jukebox.playlist;";
+        try (Statement statement = connection.createStatement()) {
+
+            ResultSet resultSet = statement.executeQuery(query);
+            while(resultSet.next())
+            {
+                int playlistId = resultSet.getInt("playlist_id");
+                String playlistName = resultSet.getString("playlist_name");
+                Playlist playList=new Playlist(playlistId,playlistName);
+                listOfPlaylist.add(playList);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listOfPlaylist;
+
     }
 }
