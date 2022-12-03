@@ -63,6 +63,6 @@ public class Playlist {
 
   @Override
   public String toString() {
-    return String.format("\u001B[32m%-10s%-15s\u001B[0m", playlistId,playlistName);
+    return String.format("\u001B[32m%-30s%-15s\u001B[0m", playlistId,playlistName);
   }
 }
