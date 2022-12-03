@@ -18,11 +18,6 @@ public class Playlist {
   public Playlist() {
   }
 
-  public Playlist(int playlistId, String playlistName, List<Song> songList) {
-    this.playlistId = playlistId;
-    this.playlistName = playlistName;
-    this.songList = songList;
-  }
 
   public Playlist(int playlistId, String playlistName) {
     this.playlistId = playlistId;
@@ -68,10 +63,6 @@ public class Playlist {
 
   @Override
   public String toString() {
-    return "Playlist{" +
-            "playlistId=" + playlistId +
-            ", playlistName='" + playlistName + '\'' +
-            ", songList=" + songList +
-            '}';
+    return String.format("\u001B[32m%-10s%-15s\u001B[0m", playlistId,playlistName);
   }
 }
