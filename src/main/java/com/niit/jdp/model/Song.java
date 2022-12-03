@@ -10,23 +10,38 @@ import java.util.Objects;
 
 public class Song {
     private int songId;
-    private  String songName;
-    private  String songDuration;
+    private String songName;
+    private String songDuration;
     private String genreType;
     private String artistName;
     private String albumName;
 
+    private String songPath;
+
     public Song() {
     }
 
-    public Song(int songId, String songName, String songDuration, String genreType, String artistName, String albumName) {
+    public Song(int songId, String songName, String albumName) {
+        this.songId = songId;
+        this.songName = songName;
+        this.albumName = albumName;
+    }
+
+    public Song(int songId, String songName) {
+        this.songId = songId;
+        this.songName = songName;
+    }
+
+    public Song(int songId, String songName, String songDuration, String genreType, String artistName, String albumName, String songPath) {
         this.songId = songId;
         this.songName = songName;
         this.songDuration = songDuration;
         this.genreType = genreType;
         this.artistName = artistName;
         this.albumName = albumName;
+        this.songPath = songPath;
     }
+
 
     public String getSongName() {
         return songName;
@@ -83,13 +98,7 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Song{" +
-                "songId=" + songId +
-                ", songName='" + songName + '\'' +
-                ", songDuration='" + songDuration + '\'' +
-                ", genreType='" + genreType + '\'' +
-                ", artistName='" + artistName + '\'' +
-                ", albumName='" + albumName + '\'' +
-                '}';
+        return String.format("%-5s\t-15s%\t-15s%\t-15s%\t-15s%\t-5s%\t-15s%", this.songId, this.songName, this.albumName, this.artistName, this.genreType, this.songDuration, this.songPath);
     }
 }
+
