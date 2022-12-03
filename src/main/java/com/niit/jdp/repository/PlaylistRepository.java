@@ -64,5 +64,25 @@ public class PlaylistRepository {
         }
         return rowCount>0;
     }
+    public List<Song> getSonglistFromPlaylist(int playlistId)  {
+        List<Song> songs = new ArrayList<>();
+        String query = "select * from sales.playlist where playlist_id = ?;";
+        ResultSet resultSet;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, playlistId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String songIds = resultSet.getString("song_ids");
+                String[] songIdArray = songIds.split(",");
+                for (String songId : songIdArray) {
+                    Song song = new SongRepository().getSongBySongId(Integer.parseInt(songId));
+                    songs.add(song);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
+        return songs;
+    }
 }
