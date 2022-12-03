@@ -6,6 +6,7 @@
 
 package com.niit.jdp.repository;
 
+import com.niit.jdp.exception.PlaylistEmptyException;
 import com.niit.jdp.model.Playlist;
 import com.niit.jdp.model.Song;
 import com.niit.jdp.service.DatabaseConnectionService;
@@ -28,10 +29,13 @@ public class PlaylistRepository {
         musicPlayerService=new MusicPlayerService();
     }
 
-    public Playlist createPlaylist(String playlistName)
-    {
+    public Playlist createPlaylist(String playlistName) throws PlaylistEmptyException {
+        if(playlistName==null)
+        {
+            throw new PlaylistEmptyException("Playlist is not Created");
+        }
         Playlist playlist = new Playlist();
-        String insertQuery = "insert into jukebox.playlist values (?);";
+        String insertQuery = "insert into jukebox.playlist(playlist_name) values (?);";
         try (PreparedStatement statement = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, playlistName);
             int result = statement.executeUpdate();
@@ -61,7 +65,11 @@ public class PlaylistRepository {
         }
         return rowCount>0;
     }
-    public List<Song> getSonglistFromPlaylist(int playlistId)  {
+    public List<Song> getSongIdsFromPlaylist(int playlistId) throws PlaylistEmptyException {
+        if(playlistId==0)
+        {
+            throw new PlaylistEmptyException("Id is empty");
+        }
         List<Song> songs = new ArrayList<>();
         String query = "select * from jukebox.playlist where playlist_id = ?;";
         ResultSet resultSet;
