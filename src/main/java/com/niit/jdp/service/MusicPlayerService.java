@@ -20,7 +20,7 @@ public class MusicPlayerService {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(songFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-            System.out.println("Enter 1. Start\t\n 2.stop \t\n3.Back to Main Menu");
+            System.out.println("Enter 1. Start\t\n 2.stop \t\n3.pause\t\n4.Back to Main Menu");
             int choice=0;
 
             do {
@@ -32,14 +32,24 @@ public class MusicPlayerService {
                     }
                     case 2: {
                         clip.stop();
+                        clip.close();
                         break;
+                    }
+                    case 3 :
+                    {
+                        if(clip!=null)
+                        {
+                            clip.stop();
+                            break;
+                        }
+
                     }
                     default: {
                         System.out.println("");
                     }
 
                 }
-            }while (choice==1 || choice==2);
+            }while (choice==1||choice==2||choice==3);
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException exception) {
             exception.printStackTrace();
