@@ -29,6 +29,7 @@ public class SongRepository {
         try (Statement statement = connection.createStatement()) {
 
             ResultSet resultSet = statement.executeQuery(query);
+            finalSongList.clear();
             while(resultSet.next())
             {
                 int songId = resultSet.getInt("song_id");
@@ -38,7 +39,7 @@ public class SongRepository {
                 String albumName = resultSet.getString("album_name");
                 String artistName = resultSet.getString("artist_name");
                 String songPath = resultSet.getString("song_path");
-                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName,songPath);
+                Song song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
                 finalSongList.add(song);
 
             }
@@ -62,7 +63,12 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String name = resultSet.getString("song_name");
-                song=new Song(songId,songName);
+                String songDuration = resultSet.getString("duration");
+                String genreType = resultSet.getString("genre_type");
+                String albumName = resultSet.getString("album_name");
+                String artistName = resultSet.getString("artist_name");
+                String songPath = resultSet.getString("song_path");
+                 song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
 
 
             }
@@ -82,12 +88,17 @@ public class SongRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,albumName);
             ResultSet resultSet = preparedStatement.executeQuery();
+            finalSongList.clear();
             while(resultSet.next())
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
+                String songDuration = resultSet.getString("duration");
+                String genreType = resultSet.getString("genre_type");
                 String name = resultSet.getString("album_name");
-                Song song=new Song(songId,songName);
+                String artistName = resultSet.getString("artist_name");
+                String songPath = resultSet.getString("song_path");
+                Song song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);;
                 finalSongList.add(song);
 
             }
@@ -102,11 +113,17 @@ public class SongRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,artistName);
             ResultSet resultSet = preparedStatement.executeQuery();
+            finalSongList.clear();
             while(resultSet.next())
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                Song song=new Song(songId,songName);
+                String songDuration = resultSet.getString("duration");
+                String genreType = resultSet.getString("genre_type");
+                String albumName = resultSet.getString("album_name");
+                String name = resultSet.getString("artist_name");
+                String songPath = resultSet.getString("song_path");
+                Song song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
                 finalSongList.add(song);
 
             }
@@ -121,11 +138,17 @@ public class SongRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,genreType);
             ResultSet resultSet = preparedStatement.executeQuery();
+            finalSongList.clear();
             while(resultSet.next())
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                Song song=new Song(songId,songName);
+                String songDuration = resultSet.getString("duration");
+                String type = resultSet.getString("genre_type");
+                String albumName = resultSet.getString("album_name");
+                String artistName = resultSet.getString("artist_name");
+                String songPath = resultSet.getString("song_path");
+                Song song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
                 finalSongList.add(song);
 
             }
@@ -133,5 +156,24 @@ public class SongRepository {
             throw new RuntimeException(e);
         }
         return  finalSongList;
+    }
+
+    public Song getSongBySongId(int songId) throws SQLException {
+        Song song = new Song();
+        String selectQuery = "select * from jukebox.song where song_id = ?;";
+        PreparedStatement statement = connection.prepareStatement(selectQuery);
+        statement.setInt(1, songId);
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("song_id");
+            String songName = resultSet.getString("song_name");
+            String songDuration = resultSet.getString("duration");
+            String genreType = resultSet.getString("genre_type");
+            String albumName = resultSet.getString("album_name");
+            String artistName = resultSet.getString("artist_name");
+            String songPath = resultSet.getString("song_path");
+           song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
+        }
+        return song;
     }
 }
