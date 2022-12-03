@@ -27,6 +27,14 @@ public class Song {
         this.albumName = albumName;
     }
 
+    public String getSongPath() {
+        return songPath;
+    }
+
+    public void setSongPath(String songPath) {
+        this.songPath = songPath;
+    }
+
     public Song(int songId, String songName) {
         this.songId = songId;
         this.songName = songName;
@@ -98,7 +106,9 @@ public class Song {
 
     @Override
     public String toString() {
-        return String.format("%-5s\t-15s%\t-15s%\t-15s%\t-15s%\t-5s%\t-15s%", this.songId, this.songName, this.albumName, this.artistName, this.genreType, this.songDuration, this.songPath);
+
+        return String.format("\u001B[32m%-10s%-20s\t%-20s\t%-25s\t%-20s\t%-15s\u001B[0m",  songId,songName,songDuration,genreType,albumName,artistName,songPath);
+
     }
 }
 
