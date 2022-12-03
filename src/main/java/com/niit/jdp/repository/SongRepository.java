@@ -6,6 +6,7 @@
 
 package com.niit.jdp.repository;
 
+import com.niit.jdp.exception.UserWrongInputException;
 import com.niit.jdp.model.Song;
 import com.niit.jdp.service.DatabaseConnectionService;
 
@@ -36,7 +37,8 @@ public class SongRepository {
                 String genreType = resultSet.getString("genre_type");
                 String albumName = resultSet.getString("album_name");
                 String artistName = resultSet.getString("artist_name");
-                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                String songPath = resultSet.getString("song_path");
+                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName,songPath);
                 finalSongList.add(song);
 
             }
@@ -46,8 +48,11 @@ public class SongRepository {
         return finalSongList;
 
     }
-    public Song searchSongByName(String songName) {
-
+    public Song searchSongByName(String songName) throws UserWrongInputException {
+     if(songName==null)
+     {
+         throw new UserWrongInputException("Entered wrong Song name");
+     }
         String query = " SELECT * FROM jukebox.song where (song_name = ? );";
         Song song = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -57,11 +62,7 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String name = resultSet.getString("song_name");
-                String songDuration = resultSet.getString("duration");
-                String genreType = resultSet.getString("genre_type");
-                String albumName = resultSet.getString("album_name");
-                String artistName = resultSet.getString("artist_name");
-                song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                song=new Song(songId,songName);
 
 
             }
@@ -72,9 +73,12 @@ public class SongRepository {
         return song;
 
     }
-    public List<Song> searchByAlbumName(String albumName)
-    {
-        String query= " select * from juke.song where album_name = ? ";
+    public List<Song> searchByAlbumName(String albumName) throws UserWrongInputException {
+        if(albumName==null)
+        {
+            throw new UserWrongInputException("Entered wrong album name");
+        }
+        String query= " select * from jukebox.song where album_name = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,albumName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -82,11 +86,8 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                String songDuration = resultSet.getString("duration");
-                String genreType = resultSet.getString("genre_type");
                 String name = resultSet.getString("album_name");
-                String artistName = resultSet.getString("artist_name");
-                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                Song song=new Song(songId,songName);
                 finalSongList.add(song);
 
             }
@@ -105,11 +106,7 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                String songDuration = resultSet.getString("duration");
-                String genreType = resultSet.getString("genre_type");
-                String albumName = resultSet.getString("album_name");
-                String name = resultSet.getString("artist_name");
-                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                Song song=new Song(songId,songName);
                 finalSongList.add(song);
 
             }
@@ -128,11 +125,7 @@ public class SongRepository {
             {
                 int songId = resultSet.getInt("song_id");
                 String songName = resultSet.getString("song_name");
-                String songDuration = resultSet.getString("duration");
-                String type = resultSet.getString("genre_type");
-                String albumName = resultSet.getString("album_name");
-                String artistName = resultSet.getString("artist_name");
-                Song song=new Song(songId,songName,songDuration,genreType,artistName,albumName);
+                Song song=new Song(songId,songName);
                 finalSongList.add(song);
 
             }
