@@ -51,4 +51,18 @@ public class PlaylistRepository {
         return playlist;
     }
 
+    public  boolean songAddToPlaylist(int playlistId,String songIds)
+    {
+        int rowCount=0;
+        String query="update jukebox.playlist set song_ids = ? where playlist_id = ?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, songIds);
+            statement.setInt(2, playlistId);
+            rowCount = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowCount>0;
+    }
+
 }
