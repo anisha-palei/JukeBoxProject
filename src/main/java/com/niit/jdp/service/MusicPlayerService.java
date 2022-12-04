@@ -20,7 +20,7 @@ public class MusicPlayerService {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(songFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-            System.out.println("Enter 1. Start\t\n\t2.stop \t\n\t3.pause\t\n\t4.Back to Main Menu");
+            System.out.println("Enter \uu001B[34m1. Start\t\n\t  2. Stop\t\t\n\t  3. Pause\t\n\t  4. Back to Main Menu\uu001B[0m");
             int choice=0;
 
             do {
