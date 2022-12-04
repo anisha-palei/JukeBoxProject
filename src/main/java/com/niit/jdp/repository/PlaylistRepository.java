@@ -29,13 +29,19 @@ public class PlaylistRepository {
         musicPlayerService=new MusicPlayerService();
     }
 
+    /**
+     * This method is used to get the record os a Playlist based on their name
+     *
+     * @param playlistName - name of the playlist
+     * @return playlist object
+     */
     public Playlist createPlaylist(String playlistName) throws PlaylistEmptyException {
         if(playlistName==null)
         {
             throw new PlaylistEmptyException("Playlist is not Created");
         }
         Playlist playlist = new Playlist();
-        String insertQuery = "insert into jukebox.playlist(playlist_name) values (?);";
+        String insertQuery = "insert into jukebox.playlist(playlist_name) values (?);";//insert
         try (PreparedStatement statement = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, playlistName);
             int result = statement.executeUpdate();
@@ -51,7 +57,13 @@ public class PlaylistRepository {
         }
         return playlist;
     }
-
+    /**
+     * This method is used to update a  record in the playlist table
+     *
+     * @param playlistId- id of playlist
+     * @param  songIds- new songIds
+     * @return true if the record is updated successfully, false otherwise
+     */
     public  boolean songAddToPlaylist(int playlistId,String songIds)
     {
         int rowCount=0;
@@ -65,6 +77,11 @@ public class PlaylistRepository {
         }
         return rowCount>0;
     }
+    /**
+     * This method is used to get all the songs ids from the playlist table based on playlist ids in jukebox database
+     * @param playlistId-id of playlist table
+     * @return List of songs objects
+     */
     public List<Song> getSongIdsFromPlaylist(int playlistId) throws PlaylistEmptyException {
         if(playlistId==0)
         {
@@ -90,6 +107,11 @@ public class PlaylistRepository {
 
         return songs;
     }
+    /**
+     * This method is used to get all the records from the playlist table in jukebox  database
+     *
+     * @return List of playlist objects
+     */
     public List<Playlist> displayAllPlaylist() {
         List<Playlist> listOfPlaylist=new ArrayList<>();
         String query="Select * from jukebox.playlist;";

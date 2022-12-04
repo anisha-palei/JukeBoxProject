@@ -23,6 +23,11 @@ public class SongRepository {
         connection = databaseService.getConnectionToDatabase();
         finalSongList=new ArrayList<>();
     }
+    /**
+     * This method is used to get all the records from the songs table in jukebox database
+     *
+     * @return List of songs objects
+     */
     public List<Song> displaySongs()
     {
         String query="Select * from jukebox.song;";
@@ -49,6 +54,12 @@ public class SongRepository {
         return finalSongList;
 
     }
+    /**
+     * This method is used to get the record os a Song based on their song name
+     *
+     * @param songName - songName of the song table
+     * @return song object
+     */
     public Song searchSongByName(String songName) throws UserWrongInputException {
      if(songName==null)
      {
@@ -79,6 +90,12 @@ public class SongRepository {
         return song;
 
     }
+    /**
+     * This method is used to get all the records from the songs table in jukebox database
+     * @param albumName-albumName of song table
+     *
+     * @return List of songs objects
+     */
     public List<Song> searchByAlbumName(String albumName) throws UserWrongInputException {
         if(albumName==null)
         {
@@ -107,6 +124,12 @@ public class SongRepository {
         }
         return  finalSongList;
     }
+    /**
+     * This method is used to get all the records from the songs table in jukebox database
+     * @param artistName-name of artist
+     *
+     * @return List of songs objects
+     */
     public List<Song> searchByArtistName(String artistName)
     {
         String query= " select * from jukebox.song where artist_name = ? ";
@@ -132,6 +155,12 @@ public class SongRepository {
         }
         return  finalSongList;
     }
+    /**
+     * This method is used to get all the records from the songs table in jukebox database
+     * @param genreType -type of genre in song table
+     *
+     * @return List of songs objects
+     */
     public List<Song> searchByGenre(String genreType)
     {
         String query= " select * from jukebox.song where genre_type = ? ";
@@ -157,7 +186,12 @@ public class SongRepository {
         }
         return  finalSongList;
     }
-
+    /**
+     * This method is used to get the record os a Song based on their songId
+     *
+     * @param songId - id of the song
+     * @return song object
+     */
     public Song getSongBySongId(int songId) throws SQLException {
         Song song = new Song();
         String selectQuery = "select * from jukebox.song where song_id = ?;";
