@@ -22,7 +22,6 @@ class JukeBoxMainTest {
     PlaylistRepository playListRepository;
     @BeforeEach
     void setUp() throws SQLException, ClassNotFoundException {
-        song=new Song(1, "Kesariya", "04:28", "Romance", "Arijit singh","Brahmastra","src/main/resources/songs/Kesariya_64_PagalWorld.com.se_.wav");
         songRepository=new SongRepository();
         playListRepository=new PlaylistRepository();
 
@@ -36,32 +35,31 @@ class JukeBoxMainTest {
     @Test
     public void displayAllSongsSuccess()
     {
-        //act
-        List<Song> expectedOutput=songRepository.displaySongs();
+       int expected=8;
         //arrange
         List<Song> actualOutput= songRepository.displaySongs();
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertEquals(expected,actualOutput.size());
 
     }
     @Test
     public void displayAllSongsFailure()
     {
         //act
-        Song expectedOutput= new Song(1,"Kesariya","04:28","Romance","Brahmastra","Arijit singh","src/main/resources/songs/Kesariya_64_PagalWorld.com.se_.wav");
+       int expectedOutput=10;
         //arrange
         List<Song> actualOutput= songRepository.displaySongs();
         //assert
-        assertNotEquals(expectedOutput,actualOutput.get(0));
+        assertNotEquals(expectedOutput,actualOutput.size());
 
     }
 
     @Test
     public void searchSongByNameSuccess() throws UserWrongInputException {
         //act
-        Song expectedOutput=songRepository.searchSongByName("Kesariya");
+        int expectedOutput=1;
         //arrange
-        Song actualOutput= songRepository.searchSongByName("Kesariya");
+        int actualOutput= songRepository.searchSongByName("Kesariya").getSongId();
         //assert
         assertEquals(expectedOutput,actualOutput);
     }
@@ -69,159 +67,129 @@ class JukeBoxMainTest {
     @Test
     public void searchSongByNameFailure() throws UserWrongInputException {
         //act
-        Song expectedOutput=new Song(1, "unknown", "04:28", "Romance", "Arijit singh","Brahmastra","src/main/resources/songs/Kesariya_64_PagalWorld.com.se_.wav");
+        int expectedOutput=2;
         //arrange
-        Song actualOutput= songRepository.searchSongByName("Kesariya");
+        int actualOutput= songRepository.searchSongByName("Kesariya").getSongId();
         //assert
         assertNotEquals(expectedOutput,actualOutput);
     }
 
     @Test
     public void searchSongByAlbumNameSuccess() throws UserWrongInputException {
+
         //act
-        List<Song> expectedOutput=songRepository.searchByAlbumName("Brahmastra");
+        int expectedOutput=2;
         //arrange
         List<Song> actualOutput= songRepository.searchByAlbumName("Brahmastra");
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertEquals(expectedOutput,actualOutput.size());
     }
 
     @Test
     public void searchSongByAlbumNameFailure() throws UserWrongInputException {
         //act
-        Song expectedOutput=new Song(1, "Kesariya", "04:28", "Romance", "Arijit singh","Kedarnath","src/main/resources/songs/Kesariya_64_PagalWorld.com.se_.wav");
+        int expectedOutput=1;
         //arrange
         List<Song> actualOutput= songRepository.searchByAlbumName("Brahmastra");
         //assert
-        assertNotEquals(expectedOutput,actualOutput.get(0));
+        assertNotEquals(expectedOutput,actualOutput.size());
     }
     @Test
     public void searchSongByArtistNameSuccess()
     {
         //act
-        List<Song> expectedOutput=songRepository.searchByArtistName("Arijit singh");
+       int expectedOutput=1;
         //arrange
         List<Song> actualOutput= songRepository.searchByArtistName("Arijit singh");
         //assert
-        assertEquals(expectedOutput,actualOutput);
+        assertEquals(expectedOutput,actualOutput.size());
     }
 
     @Test
     public void searchSongByArtistNameFailure()
     {
         //act
-        Song expectedOutput=new Song(1, "Kesariya", "04:28", "Romance", "Arjun Kapoor","Brahmastra","src/main/resources/songs/Kesariya_64_PagalWorld.com.se_.wav");
+        int expectedOutput=2;
         //arrange
         List<Song> actualOutput= songRepository.searchByArtistName("Arijit singh");
         //assert
-        assertNotEquals(expectedOutput,actualOutput.get(0));
+        assertNotEquals(expectedOutput,actualOutput.size());
     }
 
     @Test
     public void searchSongByGenreTypeSuccess()
     {
+
         //act
-        List<Song> expectedOutput=songRepository.searchByGenre("Romance");
+        int expectedOutput=1;
         //arrange
         List<Song> actualOutput= songRepository.searchByGenre("Romance");
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertEquals(expectedOutput,actualOutput.size());
     }
 
     @Test
     public void searchSongByGenreTypeFailure()
     {
         //act
-        List<Song> expectedOutput=songRepository.searchByGenre("Pop");
+        int expectedOutput=2;
         //arrange
         List<Song> actualOutput= songRepository.searchByGenre("Romance");
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
-    }
-
-    @Test
-    public void createPlayListSuccess() throws SQLException, PlaylistEmptyException {
-        //act
-        String expectedOutput="aaa";
-        //arrange
-        String actualOutput="aaa";
-        //assert
-        assertEquals(expectedOutput,actualOutput);
-
-    }
-
-    @Test
-    public void createPlayListFailure() throws SQLException, PlaylistEmptyException {
-        //act
-       String expectedOutput="aaa";
-        //arrange
-        String actualOutput="asd";
-        //assert
-        assertNotEquals(expectedOutput,actualOutput);
-
+        assertNotEquals(expectedOutput,actualOutput.size());
     }
 
     @Test
     public void addSongToPlaylistSuccess()
     {
-        //act
-        boolean expectedOutput=playListRepository.songAddToPlaylist(1,"2,1,3");
         //arrange
-        boolean actualOutput=playListRepository.songAddToPlaylist(1,"2,1,3");
+        boolean actualOutput=playListRepository.songAddToPlaylist(2,null);
         //assert
-        assertEquals(expectedOutput,actualOutput);
+        assertEquals(true,actualOutput);
     }
 
     @Test
     public void addSongToPlaylistFailure()
     {
-        //act
-    boolean expectedOutput=playListRepository.songAddToPlaylist(1,"2,1,3");
         //arrange
-    boolean actualOutput=playListRepository.songAddToPlaylist(0,"2,1,2");
+        boolean actualOutput=playListRepository.songAddToPlaylist(2,null);
         //assert
-        assertNotEquals(expectedOutput,actualOutput);
+        assertNotEquals(false,actualOutput);
     }
 
     @Test
     public void getSongsFromPlaylistSuccess() throws PlaylistEmptyException {
-        //act
-        List<Song> expectedOutput=playListRepository.getSongIdsFromPlaylist(1);
         //arrange
-        List<Song> actualOutput=playListRepository.getSongIdsFromPlaylist(1);
+        List<Song> actualOutput= playListRepository.getSongIdsFromPlaylist(4);
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertEquals(1,actualOutput.get(0).getSongId());
     }
     @Test
     public void getSongsFromPlaylistFailure() throws PlaylistEmptyException {
-        //act
-        List<Song> expectedOutput=playListRepository.getSongIdsFromPlaylist(2);
         //arrange
-        List<Song> actualOutput=playListRepository.getSongIdsFromPlaylist(1);
+        List<Song> actualOutput= playListRepository.getSongIdsFromPlaylist(4);
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertNotEquals(2,actualOutput.get(0).getSongId());
     }
     @Test
     public void displayAllPlaylistSuccess()
     {
-        //act
-        List<Playlist> expectedOutput=playListRepository.displayAllPlaylist();
+        int expected=8;
         //arrange
-        List<Playlist> actualOutput=playListRepository.displayAllPlaylist();
+        List<Playlist> actualOutput= playListRepository.displayAllPlaylist();
         //assert
-        assertEquals(expectedOutput.get(0),actualOutput.get(0));
+        assertEquals(expected,actualOutput.size());
     }
 
     @Test
     public void displayAllPlaylistFailure()
     {
 
-        //act
-        List<Playlist> expectedOutput=playListRepository.displayAllPlaylist();
+        int expected=2;
         //arrange
-        List<Playlist> actualOutput=playListRepository.displayAllPlaylist();
+        List<Playlist> actualOutput= playListRepository.displayAllPlaylist();
         //assert
-        assertNotEquals(expectedOutput.get(1),actualOutput.get(0));
+        assertNotEquals(expected,actualOutput.size());
     }
 
 }
