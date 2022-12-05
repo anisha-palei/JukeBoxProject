@@ -50,6 +50,13 @@ public class Song {
         this.songPath = songPath;
     }
 
+    public int getSongId() {
+        return songId;
+    }
+
+    public void setSongId(int songId) {
+        this.songId = songId;
+    }
 
     public String getSongName() {
         return songName;
@@ -91,18 +98,6 @@ public class Song {
         this.albumName = albumName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Song song = (Song) o;
-        return songId == song.songId && Objects.equals(songName, song.songName) && Objects.equals(songDuration, song.songDuration) && Objects.equals(genreType, song.genreType) && Objects.equals(artistName, song.artistName) && Objects.equals(albumName, song.albumName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(songId, songName, songDuration, genreType, artistName, albumName);
-    }
 
     @Override
     public String toString() {

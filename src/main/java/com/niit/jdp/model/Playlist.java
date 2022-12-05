@@ -49,19 +49,6 @@ public class Playlist {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Playlist playlist = (Playlist) o;
-    return playlistId == playlist.playlistId && Objects.equals(playlistName, playlist.playlistName) && Objects.equals(songList, playlist.songList);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(playlistId, playlistName, songList);
-  }
-
-  @Override
   public String toString() {
     return String.format("\u001B[32m%-30s%-15s\u001B[0m", playlistId,playlistName);
   }

@@ -41,7 +41,7 @@ public class PlaylistRepository {
             throw new PlaylistEmptyException("Playlist is not Created");
         }
         Playlist playlist = new Playlist();
-        String insertQuery = "insert into jukebox.playlist(playlist_name) values (?);";//insert
+        String insertQuery = "insert into jukebox.playlist(playlist_name) values (?);";
         try (PreparedStatement statement = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, playlistName);
             int result = statement.executeUpdate();
