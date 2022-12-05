@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class MusicPlayerService {
     Scanner scanner=new Scanner(System.in);
-    public void play(String songPath) {
+    public int play(String songPath) {
 
         File songFile = new File(songPath);
         try {
@@ -46,13 +46,21 @@ public class MusicPlayerService {
                     }
                     default: {
                         System.out.println("");
+                        break;
                     }
 
                 }
             }while (choice==1||choice==2||choice==3);
+            if(choice>=4)
+            {
+                return 5;
+            }
+
 
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException exception) {
             exception.printStackTrace();
+
         }
+        return 0;
     }
 }
