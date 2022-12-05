@@ -61,12 +61,9 @@ public class SongRepository {
      * @return song object
      */
     public Song searchSongByName(String songName) throws UserWrongInputException {
-     if(songName==null)
-     {
-         throw new UserWrongInputException("Entered wrong Song name");
-     }
-        String query = " SELECT * FROM jukebox.song where (song_name = ? );";
         Song song = null;
+        String query = " SELECT * FROM jukebox.song where (song_name = ? );";
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,songName);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -97,10 +94,6 @@ public class SongRepository {
      * @return List of songs objects
      */
     public List<Song> searchByAlbumName(String albumName) throws UserWrongInputException {
-        if(albumName==null)
-        {
-            throw new UserWrongInputException("Entered wrong album name");
-        }
         String query= " select * from jukebox.song where album_name = ? ";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,albumName);
@@ -119,8 +112,12 @@ public class SongRepository {
                 finalSongList.add(song);
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if(finalSongList.isEmpty())
+            {
+                throw new UserWrongInputException("Entered the wrong album name");
+            }
+        } catch (SQLException | UserWrongInputException e) {
+            System.err.println(e.getMessage());
         }
         return  finalSongList;
     }
@@ -150,8 +147,12 @@ public class SongRepository {
                 finalSongList.add(song);
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if(finalSongList.isEmpty())
+            {
+                throw new UserWrongInputException("Entered the wrong artist name");
+            }
+        } catch (SQLException | UserWrongInputException e) {
+            System.err.println(e.getMessage());
         }
         return  finalSongList;
     }
@@ -179,10 +180,13 @@ public class SongRepository {
                 String songPath = resultSet.getString("song_path");
                 Song song=new Song(songId,songName,songDuration,genreType,albumName,artistName,songPath);
                 finalSongList.add(song);
-
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if(finalSongList.isEmpty())
+            {
+                throw new UserWrongInputException("Entered the wrong genre type");
+            }
+        }   catch (SQLException | UserWrongInputException e) {
+            System.err.println(e.getMessage());
         }
         return  finalSongList;
     }
