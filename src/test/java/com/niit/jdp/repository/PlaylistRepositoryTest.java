@@ -1,7 +1,6 @@
 package com.niit.jdp.repository;
 
 import com.niit.jdp.exception.PlaylistEmptyException;
-import com.niit.jdp.exception.UserWrongInputException;
 import com.niit.jdp.model.Playlist;
 import com.niit.jdp.model.Song;
 import org.junit.jupiter.api.AfterEach;
@@ -15,25 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaylistRepositoryTest {
 
-    SongRepository songRepository;
     PlaylistRepository playListRepository;
     @BeforeEach
     void setUp() throws SQLException, ClassNotFoundException {
-        songRepository=new SongRepository();
         playListRepository=new PlaylistRepository();
 
     }
 
     @AfterEach
     void tearDown() {
-        songRepository=null;
+
         playListRepository=null;
     }
 
-    @Test
-    void createPlaylistSuccess() throws PlaylistEmptyException {
-     assertNotNull(playListRepository.createPlaylist("new playlistName"));
-    }
 
     @Test
     void songAddToPlaylistSuccess() {
@@ -59,11 +52,11 @@ class PlaylistRepositoryTest {
     }
 
     @Test
-    void getSongIdsFromPlaylistFailure() throws PlaylistEmptyException, UserWrongInputException {
+    void getSongIdsFromPlaylistFailure() throws PlaylistEmptyException {
         //arrange
-        List<Song> actualOutput= playListRepository.getSongIdsFromPlaylist(4);
+        List<Song> actualOutput = playListRepository.getSongIdsFromPlaylist(4);
         //assert
-        assertNotEquals(2,actualOutput.get(0).getSongId());
+        assertNotEquals(2, actualOutput.get(0).getSongId());
     }
 
     @Test
