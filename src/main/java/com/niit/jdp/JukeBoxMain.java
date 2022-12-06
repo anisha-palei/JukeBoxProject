@@ -59,9 +59,7 @@ public class JukeBoxMain {
                                         scanner.nextLine();
                                         String albumName = scanner.nextLine();
                                         List<Song> songs = songRepository.searchByAlbumName(albumName);
-                                        for (Song song : songs) {
-                                            System.out.println(song);
-                                        }
+                                       songs.forEach(System.out::println);
                                         break;
                                     }
                                     case 4: {
@@ -72,7 +70,7 @@ public class JukeBoxMain {
                                         scanner.nextLine();
                                         String artistName = scanner.nextLine();
                                         List<Song> songs = songRepository.searchByArtistName(artistName);
-                                        songs.forEach(song -> System.out.println(songs));
+                                        songs.forEach(System.out::println);
                                         break;
                                     }
                                     case 5: {
@@ -83,7 +81,7 @@ public class JukeBoxMain {
                                         scanner.nextLine();
                                         String genreType = scanner.nextLine();
                                         List<Song> songs = songRepository.searchByGenre(genreType);
-                                        for (Song song : songs) System.out.println(song);
+                                        songs.forEach(System.out::println);
                                         break;
                                     }
                                     case 6: {
