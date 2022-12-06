@@ -83,10 +83,6 @@ public class PlaylistRepository {
      * @return List of songs objects
      */
     public List<Song> getSongIdsFromPlaylist(int playlistId) throws PlaylistEmptyException {
-        if(playlistId==0)
-        {
-            throw new PlaylistEmptyException("Id is empty");
-        }
         List<Song> songs = new ArrayList<>();
         String query = "select * from jukebox.playlist where playlist_id = ?;";
         ResultSet resultSet;
@@ -101,7 +97,12 @@ public class PlaylistRepository {
                     songs.add(song);
                 }
             }
-        } catch (SQLException | ClassNotFoundException e) {
+            if (songs.isEmpty()) {
+                throw new PlaylistEmptyException("list is empty");
+            }
+        } catch (SQLException | PlaylistEmptyException e) {
+            System.err.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

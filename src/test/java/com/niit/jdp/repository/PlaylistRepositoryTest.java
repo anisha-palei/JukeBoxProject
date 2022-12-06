@@ -53,11 +53,7 @@ class PlaylistRepositoryTest {
     void getSongIdsFromPlaylistSuccess() throws PlaylistEmptyException {
         //arrange
         List<Song> actualOutput= null;
-        try {
-            actualOutput = playListRepository.getSongIdsFromPlaylist(4);
-        } catch (UserWrongInputException e) {
-            throw new RuntimeException(e);
-        }
+        actualOutput = playListRepository.getSongIdsFromPlaylist(4);
         //assert
         assertEquals(1,actualOutput.get(0).getSongId());
     }
