@@ -98,4 +98,3 @@ insert into jukebox.song(song_name,duration,genre_type,album_name,artist_name,so
 insert into jukebox.song(song_name,duration,genre_type,album_name,artist_name,song_path) values("Sukh-Karta","03:00","devotional","Sukh-Karta","Amitabh Bachhan","src/main/resources/songs/Sukh-Karta-Dukh-Harta.wav");
 
 
-
