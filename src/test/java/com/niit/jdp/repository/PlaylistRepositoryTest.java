@@ -1,6 +1,7 @@
 package com.niit.jdp.repository;
 
 import com.niit.jdp.exception.PlaylistEmptyException;
+import com.niit.jdp.exception.UserWrongInputException;
 import com.niit.jdp.model.Playlist;
 import com.niit.jdp.model.Song;
 import org.junit.jupiter.api.AfterEach;
@@ -16,14 +17,13 @@ class PlaylistRepositoryTest {
 
     PlaylistRepository playListRepository;
     @BeforeEach
-    void setUp() throws SQLException, ClassNotFoundException {
+    void setUp() throws SQLException, ClassNotFoundException, SQLException {
         playListRepository=new PlaylistRepository();
 
     }
 
     @AfterEach
     void tearDown() {
-
         playListRepository=null;
     }
 
@@ -52,11 +52,11 @@ class PlaylistRepositoryTest {
     }
 
     @Test
-    void getSongIdsFromPlaylistFailure() throws PlaylistEmptyException {
+    void getSongIdsFromPlaylistFailure() throws PlaylistEmptyException, UserWrongInputException {
         //arrange
-        List<Song> actualOutput = playListRepository.getSongIdsFromPlaylist(4);
+        List<Song> actualOutput= playListRepository.getSongIdsFromPlaylist(4);
         //assert
-        assertNotEquals(2, actualOutput.get(0).getSongId());
+        assertNotEquals(2,actualOutput.get(0).getSongId());
     }
 
     @Test
@@ -81,4 +81,5 @@ class PlaylistRepositoryTest {
         assertNotEquals(expectedResult, actualResult);
 
     }
+
 }

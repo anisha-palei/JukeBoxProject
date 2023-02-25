@@ -19,14 +19,14 @@ import java.util.List;
 public class PlaylistRepository {
     Connection connection;
     DatabaseConnectionService databaseConnectionService;
-    List<Song> finalSongList;
+  SongRepository songRepository;
     MusicPlayerService musicPlayerService;
 
     public PlaylistRepository() throws SQLException, ClassNotFoundException {
         databaseConnectionService=new DatabaseConnectionService();
         connection = databaseConnectionService.getConnectionToDatabase();
-        finalSongList = new ArrayList<>();
         musicPlayerService=new MusicPlayerService();
+        songRepository=new SongRepository();
     }
 
     /**
@@ -89,17 +89,15 @@ public class PlaylistRepository {
                 String songIds = resultSet.getString("song_ids");
                 String[] songIdArray = songIds.split(",");
                 for (String songId : songIdArray) {
-                    Song song = new SongRepository().getSongBySongId(Integer.parseInt(songId));
+                    Song song = songRepository.getSongBySongId(Integer.parseInt(songId));
                     songs.add(song);
                 }
             }
             if (songs.isEmpty()) {
-                throw new PlaylistEmptyException("list is empty");
+                throw new PlaylistEmptyException("Playlist is not Created");
             }
         } catch (SQLException | PlaylistEmptyException e) {
             System.err.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
 
         return songs;

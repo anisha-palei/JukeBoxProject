@@ -49,6 +49,7 @@ public class JukeBoxMain {
                                         scanner.nextLine();
                                         String songName = scanner.nextLine();
                                         System.out.println(songRepository.searchSongByName(songName));
+                                        System.out.println();
                                         break;
                                     }
                                     case 3: {
@@ -103,7 +104,7 @@ public class JukeBoxMain {
                                 if (choice2 == 3) {
                                     break;
                                 } else if (choice2 == 2) {
-                                    System.out.println("Enter Song Id from the list of Songs");
+                                    System.out.println("Enter Song Id ");
                                     int id = scanner.nextInt();
                                     String songPath = songRepository.getSongBySongId(id).getSongPath();
                                     musicPlayerService.play(songPath);

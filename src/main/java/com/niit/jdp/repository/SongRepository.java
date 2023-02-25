@@ -60,7 +60,7 @@ public class SongRepository {
      * @param songName - songName of the song table
      * @return song object
      */
-    public Song searchSongByName(String songName) throws UserWrongInputException {
+    public Song searchSongByName(String songName)  {
         Song song = null;
         String query = " SELECT * FROM jukebox.song where (song_name = ? );";
 

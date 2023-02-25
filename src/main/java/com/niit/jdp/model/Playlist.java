@@ -40,14 +40,6 @@ public class Playlist {
     this.playlistName = playlistName;
   }
 
-  public List<Song> getSongList() {
-    return songList;
-  }
-
-  public void setSongList(List<Song> songList) {
-    this.songList = songList;
-  }
-
   @Override
   public String toString() {
     return String.format("\u001B[32m%-30s%-15s\u001B[0m", playlistId,playlistName);

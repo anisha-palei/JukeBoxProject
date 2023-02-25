@@ -20,11 +20,11 @@ public class DatabaseConnectionService {
     public DatabaseConnectionService() {
         connection=null;
     }
-    private void connect() throws ClassNotFoundException, SQLException {
+    private void connect() throws  SQLException {
         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 
-    public Connection getConnectionToDatabase() throws SQLException, ClassNotFoundException {
+    public Connection getConnectionToDatabase() throws SQLException {
         connect();
         return connection;
     }
